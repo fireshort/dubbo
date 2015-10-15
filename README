@@ -1,3 +1,5 @@
+Since Alibaba doesn't update dubbo for a long time, I'll try my best to improve it including code and documents. 
+
 Dubbo is a distributed service framework enpowers applications with service import/export capability with high performance RPC.
 
 It's composed of three kernel parts:
@@ -16,18 +18,18 @@ For more, please refer to:
 Quick Start
 ================================================================
 
-Export remote service:
+Export remote service(Provider):
 
-    <bean id="barService" class="com.foo.BarServiceImpl" />
-	
-    <dubbo:service interface="com.foo.BarService" ref="barService" />
+    <bean id="demoService" class="com.alibaba.dubbo.demo.provider.DemoServiceImpl" />
+    
+    <dubbo:service interface="com.alibaba.dubbo.demo.DemoService" ref="demoService" />
 
-Refer remote service:
+Refer remote service(Consumer):
 
-    <dubbo:reference id="barService" interface="com.foo.BarService" />
-	
-    <bean id="barAction" class="com.foo.BarAction">
-        <property name="barService" ref="barService" />
+    <dubbo:reference id="demoService" interface="com.alibaba.dubbo.demo.DemoService" />
+
+    <bean class="com.alibaba.dubbo.demo.consumer.DemoAction" init-method="start">
+        <property name="demoService" ref="demoService" />
     </bean>
 
 ================================================================
@@ -49,7 +51,7 @@ Source Building
 1. Checkout the dubbo source code:
 
     cd ~
-    git clone https://github.com/alibaba/dubbo.git dubbo
+    git clone https://github.com/fireshort/dubbo.git dubbo
 
     git checkout master
     or: git checkout -b dubbo-2.4.0
@@ -60,17 +62,17 @@ Source Building
     mvn eclipse:eclipse
     Eclipse -> Menu -> File -> Import -> Exsiting Projects to Workspace -> Browse -> Finish
 
-    Context Menu -> Run As -> Java Application:
-    dubbo-demo-provider/src/test/java/com.alibaba.dubbo.demo.provider.DemoProvider
-    dubbo-demo-consumer/src/test/java/com.alibaba.dubbo.demo.consumer.DemoConsumer
-    dubbo-monitor-simple/src/test/java/com.alibaba.dubbo.monitor.simple.SimpleMonitor
-    dubbo-registry-simple/src/test/java/com.alibaba.dubbo.registry.simple.SimpleRegistry
-
     Edit Config:
     dubbo-demo-provider/src/test/resources/dubbo.properties
     dubbo-demo-consumer/src/test/resources/dubbo.properties
     dubbo-monitor-simple/src/test/resources/dubbo.properties
     dubbo-registry-simple/src/test/resources/dubbo.properties
+
+    Context Menu -> Run As -> Java Application:
+    dubbo-demo-provider/src/test/java/com.alibaba.dubbo.demo.provider.DemoProvider
+    dubbo-demo-consumer/src/test/java/com.alibaba.dubbo.demo.consumer.DemoConsumer
+    dubbo-monitor-simple/src/test/java/com.alibaba.dubbo.monitor.simple.SimpleMonitor
+    dubbo-registry-simple/src/test/java/com.alibaba.dubbo.registry.simple.SimpleRegistry
 
 3. Build the dubbo binary package:
 
